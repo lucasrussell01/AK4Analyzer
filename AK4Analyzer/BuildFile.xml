@@ -1,0 +1,9 @@
+<flags CXXFLAGS="-g"/>
+<use name="DataFormats/Common"/>
+<use name="DataFormats/PatCandidates"/>
+<use name="FWCore/Utilities"/>
+<use name="root"/>
+<use name="clhep"/>
+<export>
+  <lib name="1"/>
+</export>
