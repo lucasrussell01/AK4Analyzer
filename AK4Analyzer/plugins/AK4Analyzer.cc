@@ -79,19 +79,30 @@ void AK4Analyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
 
   using namespace edm;
 
-  std::cout << "Test" << std::endl;
 
-  // for (const auto& track : iEvent.get(tracksToken_)) {
-  //   // do something with track parameters, e.g, plot the charge.
-  //   // int charge = track.charge();
-  // }
+  // std::cout << "Test" << std::endl;
+  
+  int nGenJet = 0;
+  int nRecoJet = 0;
+  int nfailed = 0;
 
-// #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
-//   // if the SetupData is always needed
-//   auto setup = iSetup.getData(setupToken_);
-//   // if need the ESHandle to check if the SetupData was there or not
-//   auto pSetup = iSetup.getHandle(setupToken_);
-// #endif
+  for (const auto& jet : iEvent.get(recoJetsToken_)){
+    // std::cout << "In loop" << std::endl;
+    if (jet.pt() < 25){
+      nfailed++;
+      continue;
+    }
+    nRecoJet++;
+  }
+
+  for (const auto& jet : iEvent.get(genJetsToken_)){
+    // std::cout << "In loop" << std::endl;
+    if (jet.pt() < 25) continue;
+    nGenJet++;
+  }
+
+  std::cout << " Number of Reco Jets: " << nRecoJet << " Number of Gen Jets: " << nGenJet << " ( " << nfailed << " reco jets failed pT threshold) " << std::endl;
+
 }
 
 // ------------ method called once each job just before starting event loop  ------------
